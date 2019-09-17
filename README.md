@@ -1,12 +1,11 @@
 # Zola Deploy Action
 
-A GitHub action to automatically build and deploy your [zola] site to the master
-branch as GitHub Pages.
+A GitHub action to automatically build and deploy your [zola] site to a branch in the repository to be used for GitHub Pages.
 
 ## Table of Contents
 
  - [Usage](#usage)
- - [Secrets](#secrets)
+ - [Environment variables](#environment-variables)
  - [Custom Domain](#custom-domain)
 
 ## Usage
@@ -31,14 +30,14 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
 ```
 
-## Secrets
+The following workflow will execute only when pushing to the `master` branch and will publish the `zola` generated pages to the `gh-pages` branch.
 
- * `TOKEN`: Personal Access key with the scope `public_repo`, we need this
+## Environment Variables
+
+ * `TOKEN`: [Personal Access key](https://github.com/settings/tokens) with the scope `public_repo`, we need this
     to push the site files back to the repo.
     
     ( Actions already provides a `GITHUB_TOKEN` which is an installation token and does not trigger a GitHub Pages builds hence we need a personal access token )
-
-## Environment Variables
 * `PAGES_BRANCH`: The git branch of your repo to which the built static files will be pushed. Default is `gh-pages` branch
 
 ## Custom Domain
