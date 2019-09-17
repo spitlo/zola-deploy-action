@@ -11,19 +11,24 @@ branch as GitHub Pages.
 
 ## Usage
 
-```
-workflow "Build and deploy on push" {
-  on = "push"
-  resolves = ["zola deploy"]
-}
+In `.github/workflows` you can put any `.yml` file and put the following contents inside.
 
-action "zola deploy" {
-  uses = "shalzz/zola-deploy-action@master"
-  secrets = ["TOKEN"]
-  env = {
-    PAGES_BRANCH = "master"
-  }
-}
+```
+on:
+  push:
+    branches:
+      - master
+name: Build and deploy on push
+jobs:
+  build:
+    name: zbrox/zola-deploy-action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: zbrox/zola-deploy-action
+      uses: zbrox/zola-deploy-action@master
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
 ```
 
 ## Secrets
@@ -34,7 +39,7 @@ action "zola deploy" {
     ( Actions already provides a `GITHUB_TOKEN` which is an installation token and does not trigger a GitHub Pages builds hence we need a personal access token )
 
 ## Environment Variables
-* `PAGES_BRANCH`: The git branch of your repo to which the built static files will be pushed. Default is `master` branch
+* `PAGES_BRANCH`: The git branch of your repo to which the built static files will be pushed. Default is `gh-pages` branch
 
 ## Custom Domain
 
