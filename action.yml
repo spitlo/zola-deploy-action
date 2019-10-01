@@ -1,0 +1,5 @@
+name: "Zola Deploy"
+description: "Deploy a Zola website to GitHub Pages"
+runs:
+  using: "docker"
+  image: "Dockerfile"
