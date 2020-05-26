@@ -1,5 +1,8 @@
 # Zola Deploy Action
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fzbrox%2Fzola-deploy-action%2Fbadge&style=flat)](https://actions-badge.atrox.dev/zbrox/zola-deploy-action/goto)
+![GitHub Release](https://img.shields.io/github/v/release/zbrox/zola-deploy-action?sort=semver)
+
 A GitHub action to automatically build and deploy your [zola] site to a branch in the repository to be used for GitHub Pages.
 
 ## Table of Contents
