@@ -1,9 +1,6 @@
 # Zola Deploy Action
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fzbrox%2Fzola-deploy-action%2Fbadge&style=flat)](https://actions-badge.atrox.dev/zbrox/zola-deploy-action/goto)
-![GitHub Release](https://img.shields.io/github/v/release/zbrox/zola-deploy-action?sort=semver)
-
-A GitHub action to automatically build and deploy your [zola] site to a branch in the repository to be used for GitHub Pages.
+A GitHub action to manually build a [zola](https://github.com/getzola/zola) site to the `docs` folder in the repository to be used for GitHub Pages.
 
 ## Table of Contents
 
@@ -16,37 +13,32 @@ A GitHub action to automatically build and deploy your [zola] site to a branch i
 In `.github/workflows` you can put any `.yml` file and put the following contents inside.
 
 ```
+name: Deploy site
+
 on:
-  push:
-    branches:
-      - master
-name: Build and deploy on push
+  workflow_dispatch
+
 jobs:
   build:
-    name: zbrox/zola-deploy-action
+    name: spitlo/zola-deploy-action
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: zbrox/zola-deploy-action
-      uses: zbrox/zola-deploy-action@master
+    - name: spitlo/zola-deploy-action
+      uses: spitlo/zola-deploy-action@master
       env:
         TOKEN: ${{ secrets.TOKEN }}
 ```
 
-The following workflow will execute only when pushing to the `master` branch and will publish the `zola` generated pages to the `gh-pages` branch.
+You can the trigger the workflow from the Actions tab in your repository.
 
 ## Environment Variables
 
  * `TOKEN`: [Personal Access key](https://github.com/settings/tokens) with the scope `public_repo`, we need this
     to push the site files back to the repo.
-    
-    ( Actions already provides a `GITHUB_TOKEN` which is an installation token and does not trigger a GitHub Pages builds hence we need a personal access token )
-* `PAGES_BRANCH`: The git branch of your repo to which the built static files will be pushed. Default is `gh-pages` branch
 
 ## Custom Domain
 
 If you're using a custom domain for your GitHub Pages site put the CNAME 
 in `static/CNAME` so that zola puts it in the root of the public folder
 which is where GitHub expects it to be.
-
-[zola]: https://github.com/getzola/zola
