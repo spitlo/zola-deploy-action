@@ -31,7 +31,7 @@ main() {
 
   repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
-  echo "Using $version"
+  echo "Using Zola $version to build site."
 
   zola check
   zola build --output-dir ./docs
@@ -44,11 +44,12 @@ main() {
   
   git config user.name "Arnim"
   git config user.email "github-actions-bot@users.noreply.github.com"
+  git checkout "$MAIN_BRANCH"
   git add ./docs
   git commit -m "Deploy site $(date '+%Y-%m-%d %H:%M')"
   git push
 
-  git push --force "${repo}" "master:${MAIN_BRANCH}"
+  git push --force "${repo}" "${MAIN_BRANCH}:${MAIN_BRANCH}"
 
   echo "Deploy complete"
 }
