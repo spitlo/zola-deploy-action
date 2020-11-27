@@ -13,7 +13,7 @@ A GitHub action to manually build a [zola](https://github.com/getzola/zola) site
 In `.github/workflows` you can put any `.yml` file and put the following contents inside.
 
 ```
-name: Deploy site
+name: Deploy
 
 on:
   workflow_dispatch
@@ -42,3 +42,7 @@ You can the trigger the workflow from the Actions tab in your repository.
 If you're using a custom domain for your GitHub Pages site put the CNAME 
 in `static/CNAME` so that zola puts it in the root of the public folder
 which is where GitHub expects it to be.
+
+## TODO
+- [ ] Fetch the latest Zola version automatically (See spitlo/firetrak)
+
