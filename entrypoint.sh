@@ -32,7 +32,7 @@ main() {
   zola check
   zola build --output-dir ./docs
 
-  sed -i '' 's_https://spitlo.com__g' docs/search_index.en.js
+  sed -i 's_https://spitlo.com__g' docs/search_index.en.js
 
   echo "Pushing artifacts to ${GITHUB_REPOSITORY}:$remote_branch"
 
