@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -eu
+
+set -e
 set -o pipefail
 
 if [[ -n "$TOKEN" ]]; then
@@ -16,6 +17,10 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
+if [[ -z "$MAIN_BRANCH" ]]; then
+  MAIN_BRANCH="master"
+fi
+
 main() {
   echo "Starting deploy..."
 
@@ -24,17 +29,18 @@ main() {
 
   version=$(zola --version)
 
-  remote_repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-  remote_branch=master
+  repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
   echo "Using $version"
 
   zola check
   zola build --output-dir ./docs
 
-  sed -i 's_https://spitlo.com__g' docs/search_index.en.js
+  if [[ -n "$SITE_URL" ]] && [[ -f "docs/search_index.en.js" ]]; then
+    sed -i 's_'"$SITE_URL"'__g' docs/search_index.en.js
+  fi
 
-  echo "Pushing artifacts to ${GITHUB_REPOSITORY}:$remote_branch"
+  echo "Pushing artifacts to ${GITHUB_REPOSITORY}:${MAIN_BRANCH}"
   
   git config user.name "Arnim"
   git config user.email "github-actions-bot@users.noreply.github.com"
@@ -42,7 +48,7 @@ main() {
   git commit -m "Deploy site $(date '+%Y-%m-%d %H:%M')"
   git push
 
-  git push --force "${remote_repo}" master:${remote_branch}
+  git push --force "${repo}" "master:${MAIN_BRANCH}"
 
   echo "Deploy complete"
 }
