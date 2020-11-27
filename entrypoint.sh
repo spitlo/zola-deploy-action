@@ -35,7 +35,9 @@ main() {
   sed -i 's_https://spitlo.com__g' docs/search_index.en.js
 
   echo "Pushing artifacts to ${GITHUB_REPOSITORY}:$remote_branch"
-
+  
+  git config user.name "Arnim"
+  git config user.email "github-actions-bot@users.noreply.github.com"
   git add ./docs
   git commit -m "Deploy site $(date '+%Y-%m-%d %H:%M')"
   git push
